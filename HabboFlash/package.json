@@ -1,0 +1,7 @@
+{
+    "name": "HabboFlash",
+    "version": "0.1.0",
+    "author": "Lilith",
+    "description": "Habbo Flash Viewer",
+    "main": "main.js"
+}
