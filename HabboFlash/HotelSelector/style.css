@@ -47,6 +47,9 @@ html, body {
  .carousel .carousel-inner .PT {
      background-image: url("flag_icons_pt.png");
 }
- .carousel .carousel-inner .TR {
+.carousel .carousel-inner .TR {
      background-image: url("flag_icons_tr.png");
+}
+.carousel .carousel-inner .DEV {
+     background-image: url("flag_icons_dev.png");
 }

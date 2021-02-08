@@ -47,7 +47,7 @@ function InjectClient() {
                 "sso.token": clientsrc.substring(clientsrc.lastIndexOf("/") + 1),
                 "client.notify.cross.domain": "0",
                 //"account_id": window.session["accountId"],
-                "flash.client.url": "\/\/images.habbo.com\/gordon\/PRODUCTION-202102022203-135819140\/",
+                "flash.client.url": "\/\/images.habbo.com\/gordon\/" + GetProductionVersion() + "\/",
                 //"unique_habbo_id": window.session["uniqueId"],
             };
             var params = {
@@ -58,7 +58,7 @@ function InjectClient() {
             };
             document.getElementById("hotel-c1-clientv2").outerHTML = '<div id="hotel-c1-clientv2"></div>';
             setTimeout(function() { }, 500);
-            swfobject.embedSWF('https://images.habbo.com/gordon/PRODUCTION-202102022203-135819140/Habbo.swf', 'hotel-c1-clientv2', '100%', '100%', '11.1.0', '', flashvars, params, null, null);
+            swfobject.embedSWF('https://images.habbo.com/gordon/' + GetProductionVersion() + '/Habbo.swf', 'hotel-c1-clientv2', '100%', '100%', '11.1.0', '', flashvars, params, null, null);
             client_injected = true;
             RemoveInterstitials();
         }
@@ -67,11 +67,22 @@ function InjectClient() {
     }
 }
 
+function GetProductionVersion() {
+    if (window.location.host == "sandbox.habbo.com") {
+        return "PRODUCTION-202102051428-449960633";
+    } else {
+        return "PRODUCTION-202102022203-135819140";
+    }
+}
+
 function GetConnectionHost() {
     var hotel_loc = window.location.host;
     hotel_loc = hotel_loc.substring(hotel_loc.lastIndexOf(".") + 1);
     if (hotel_loc == "com") {
         hotel_loc = "us";
+    }
+    if (window.location.host == "sandbox.habbo.com") {
+        hotel_loc = "s2";
     }
     return "game-" + hotel_loc + ".habbo.com";
 }
