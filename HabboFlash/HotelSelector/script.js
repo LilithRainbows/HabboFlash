@@ -1,6 +1,31 @@
 $(document).ready(function() {
     if (typeof(localStorage.getItem('LastFlag')) == "undefined" || localStorage.getItem('LastFlag') == null) {
-        $('#myCarousel').carousel(2);
+        var LanguageIndex = 0;
+        if (navigator.language.startsWith("es")) {
+            LanguageIndex = 1
+        }
+        if (navigator.language.startsWith("pt")) {
+            LanguageIndex = 2
+        }
+        if (navigator.language.startsWith("it")) {
+            LanguageIndex = 3
+        }
+        if (navigator.language.startsWith("fr")) {
+            LanguageIndex = 4
+        }
+        if (navigator.language.startsWith("nl")) {
+            LanguageIndex = 5
+        }
+        if (navigator.language == "fi") {
+            LanguageIndex = 6
+        }
+        if (navigator.language.startsWith("de")) {
+            LanguageIndex = 7
+        }
+        if (navigator.language.startsWith("tr")) {
+            LanguageIndex = 8
+        }
+        $('#myCarousel').carousel(LanguageIndex);
     } else {
         LoadLastSavedFlag();
     }

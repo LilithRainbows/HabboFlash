@@ -43,7 +43,7 @@ function InjectClient() {
                 "spaweb": "1",
                 "supersonic_application_key": "2c5f4695",
                 "connection.info.host": GetConnectionHost(),
-                "use.sso" : "1",
+                "use.sso": "1",
                 "sso.token": clientsrc.substring(clientsrc.lastIndexOf("/") + 1),
                 "client.notify.cross.domain": "0",
                 //"account_id": window.session["accountId"],
@@ -57,7 +57,7 @@ function InjectClient() {
                 "wmode": "opaque"
             };
             document.getElementById("hotel-c1-clientv2").outerHTML = '<div id="hotel-c1-clientv2"></div>';
-            setTimeout(function() { }, 500);
+            setTimeout(function() {}, 500);
             swfobject.embedSWF('https://images.habbo.com/gordon/' + GetProductionVersion() + '/Habbo.swf', 'hotel-c1-clientv2', '100%', '100%', '11.1.0', '', flashvars, params, null, null);
             client_injected = true;
             RemoveInterstitials();
@@ -106,6 +106,7 @@ function GetClientStartingMsg() {
         return "Please wait! Habbo is starting up";
     }
 }
+
 function GetClientResolvingMsg() {
     var hotel_loc = window.location.host;
     hotel_loc = hotel_loc.substring(hotel_loc.lastIndexOf(".") + 1);
