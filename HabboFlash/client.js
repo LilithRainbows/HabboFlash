@@ -23,12 +23,12 @@ function InjectClient() {
             var flashvars = {
                 "external.texts.txt": "https://" + window.location.host + "/gamedata/external_flash_texts/666",
                 "connection.info.port": GetConnectionPort(),
-                "furnidata.load.url": "http://" + window.location.host + "/gamedata/furnidata_xml/666",
+                "furnidata.load.url": "https://" + window.location.host + "/gamedata/furnidata_xml/666",
                 "external.variables.txt": "https://" + window.location.host + "/gamedata/external_variables/666",
                 "client.allow.cross.domain": "1",
                 "url.prefix": "https://" + window.location.host + "",
                 "external.override.texts.txt": "https://" + window.location.host + "/gamedata/override/external_flash_override_texts/666",
-                "supersonic_custom_css": "https://images.habbo.com/game-data-server-static//./hotel.731d1960.css",
+                "supersonic_custom_css": "https://images.habbo.com/game-data-server-static/hotel.731d1960.css",
                 "external.figurepartlist.txt": "https://" + window.location.host + "/gamedata/figuredata/666",
                 "flash.client.origin": "popup",
                 "client.starting": GetClientStartingMessage(),
@@ -52,7 +52,7 @@ function InjectClient() {
                 "menu": "false",
                 "wmode": "opaque"
             }
-            swfobject.embedSWF('https://images.habbo.com/gordon/' + ProductVersion + '/Habbo.swf', 'hotel-c1-clientv2', '100%', '100%', '11.1.0', '', flashvars, params, null, null)
+            swfobject.embedSWF('https://images.habbo.com/Habbo.swf', 'hotel-c1-clientv2', '100%', '100%', '11.1.0', '', flashvars, params, null, null)
             window.HabboFlashClient.init(document.getElementById("hotel-c1-clientv2"))
             RemoveInterstitials()
         }

@@ -9,6 +9,7 @@ const path = require('path')
 const fs = require("fs")
 const prompt = require('native-prompt')
 const instances = []
+const url = require("url");
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -32,6 +33,48 @@ const gotTheLock = app.requestSingleInstanceLock()
 if (!gotTheLock) {
     app.quit()
 } else {
+    var mkc = require("make-cert")
+    var mkc2 = mkc("localhost")
+    const https = require('https');
+    const options = {
+        key: mkc2.key,
+        cert: mkc2.cert
+    };
+    https.createServer(options, function(req, res) {
+        var urlobj = url.parse(req.url)
+        var pathname = urlobj.pathname;
+        var reqhandled = false;
+        if (pathname == "/Habbo.swf") {
+            reqhandled = true;
+            fs.readFile(path.join(__dirname, pathname), (err, contents) => {
+                if (err) {
+                    res.writeHead(404);
+                    res.end();
+                } else {
+                    res.setHeader("Content-Type", "application/x-shockwave-flash");
+                    res.writeHead(200);
+                    res.end(contents);
+                }
+            });
+        }
+        if (reqhandled == false) {
+            https.get("https://images.habbo.com/" + req.url, (resp) => {
+                let rawHeaders = resp.rawHeaders;
+                for (let i = 0; i < rawHeaders.length; i += 2) {
+                    res.setHeader(rawHeaders[i], rawHeaders[i + 1]);
+                }
+                resp.on("data", (chunk) => {
+                    res.write(chunk);
+                });
+                resp.on("end", () => {
+                    res.end();
+                });
+            }).on("error", (err) => {
+                res.writeHead(500);
+                res.end();
+            });
+        }
+    }).listen(617);
 
     let pluginName
     switch (process.platform) {
@@ -55,6 +98,10 @@ if (!gotTheLock) {
             break
     }
     app.commandLine.appendSwitch('ppapi-flash-path', path.join(__dirname, "PepperFlash", pluginName))
+
+    app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
+    app.commandLine.appendSwitch('allow-insecure-localhost', 'true');
+    app.commandLine.appendSwitch('host-rules', 'MAP images.habbo.com localhost:617, MAP *.doubleclick.net null')
 
     app.on('second-instance', (event, argv, workingDirectory) => createWindow())
 
@@ -88,6 +135,7 @@ if (!gotTheLock) {
         var SendLinkEventHelpText = ["Enter an event command:", "Ingresa un comando de evento:"]
         var UseRoomIDText = ["Use RoomID", "Usar RoomID"]
         var UseRoomIDHelpText = ["Enter a room ID:", "Ingresa un ID de sala:"]
+        var OpenCalendarText = ["Open calendar", "Abrir calendario"]
         var HelpMenuText = ["Help", "Ayuda"]
         var GithubText = ["Go to GitHub", "Ir a GitHub"]
         var OpenDevToolsText = ["Open DevTools", "Abrir DevTools"]
@@ -167,6 +215,12 @@ if (!gotTheLock) {
                                     win.webContents.executeJavaScript('window.HabboFlashClient.flashInterface.openlink("navigator/goto/' + text + '")')
                                 }
                             })
+                        }
+                    },
+                    {
+                        label: OpenCalendarText[LanguageIndex],
+                        click() {
+                            win.webContents.executeJavaScript('window.HabboFlashClient.flashInterface.openlink("openView/calendar")')
                         }
                     }
                 ]
