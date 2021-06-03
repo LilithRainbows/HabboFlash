@@ -10,18 +10,24 @@ const fs = require("fs")
 const prompt = require('native-prompt')
 const instances = []
 const url = require("url");
+var currentpartition = 0;
 
 function createWindow() {
+    var currentinstancescount = instances.length
+    if (currentinstancescount > 0) {
+        currentpartition +=1
+    }
     const win = new BrowserWindow({
         width: 800,
         height: 600,
         icon: __dirname + '/AppIcon.ico',
         webPreferences: {
-            plugins: true
+            plugins: true,
+            partition: 'persist:' + currentpartition
         }
     })
     instances.push(win)
-    createMenu(win)
+    createMenu()
     win.maximize()
     win.loadURL('file://' + __dirname + '/HotelSelector/index.html')
     win.webContents.on('did-start-navigation', () => {
@@ -121,9 +127,10 @@ if (!gotTheLock) {
         } catch (ex) {}
     })
 
-    function createMenu(win) {
+    function createMenu() {
         var LanguageIndex = 0
         var FileMenuText = ["Application", "Aplicacion"]
+        var NewSessionText = ["New session", "Nueva sesion"]
         var HotelSelectorText = ["Select Hotel", "Seleccionar Hotel"]
         var ReloadPageText = ["Reload page", "Recargar pagina"]
         var ClearDataText = ["Clear data", "Limpiar datos"]
@@ -145,9 +152,16 @@ if (!gotTheLock) {
         const menu = Menu.buildFromTemplate([{
                 label: FileMenuText[LanguageIndex],
                 submenu: [{
+                        label: NewSessionText[LanguageIndex],
+                        accelerator: "CommandOrControl+N",
+                        click() {
+                            createWindow()
+                        }
+                    },
+                    {
                         label: HotelSelectorText[LanguageIndex],
                         click() {
-                            win.loadURL('file://' + __dirname + '/HotelSelector/index.html')
+                            BrowserWindow.getFocusedWindow().loadURL('file://' + __dirname + '/HotelSelector/index.html')
                         }
                     },
                     {
@@ -167,10 +181,10 @@ if (!gotTheLock) {
                         label: HideMenuText[LanguageIndex],
                         accelerator: "F11",
                         click() {
-                            if (win.isMenuBarVisible()) {
-                                win.setMenuBarVisibility(false)
+                            if (BrowserWindow.getFocusedWindow().isMenuBarVisible()) {
+                                BrowserWindow.getFocusedWindow().setMenuBarVisibility(false)
                             } else {
-                                win.setMenuBarVisibility(true)
+                                BrowserWindow.getFocusedWindow().setMenuBarVisibility(true)
                             }
                         }
                     }
@@ -202,7 +216,7 @@ if (!gotTheLock) {
                         click() {
                             prompt("LinkEvent", SendLinkEventHelpText[LanguageIndex]).then(text => {
                                 if (text) {
-                                    win.webContents.executeJavaScript('window.HabboFlashClient.flashInterface.openlink("' + text + '")')
+                                    BrowserWindow.getFocusedWindow().webContents.executeJavaScript('window.HabboFlashClient.flashInterface.openlink("' + text + '")')
                                 }
                             })
                         }
@@ -212,7 +226,7 @@ if (!gotTheLock) {
                         click() {
                             prompt("RoomID", UseRoomIDHelpText[LanguageIndex]).then(text => {
                                 if (text) {
-                                    win.webContents.executeJavaScript('window.HabboFlashClient.flashInterface.openlink("navigator/goto/' + text + '")')
+                                    BrowserWindow.getFocusedWindow().webContents.executeJavaScript('window.HabboFlashClient.flashInterface.openlink("navigator/goto/' + text + '")')
                                 }
                             })
                         }
@@ -220,7 +234,7 @@ if (!gotTheLock) {
                     {
                         label: OpenCalendarText[LanguageIndex],
                         click() {
-                            win.webContents.executeJavaScript('window.HabboFlashClient.flashInterface.openlink("openView/calendar")')
+                            BrowserWindow.getFocusedWindow().webContents.executeJavaScript('window.HabboFlashClient.flashInterface.openlink("openView/calendar")')
                         }
                     }
                 ]
