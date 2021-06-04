@@ -129,7 +129,7 @@ function ShowDisconnectedScreen() {
         disconnected_message = "¡Desconectado!"
         reload_message = "Recargar"
     }
-    document.getElementsByTagName("habbo-v2-client")[0].insertAdjacentHTML("afterend",'<habbo-client-reload><h1>' + disconnected_message + '</h1><button onclick="location.reload();" class="client-v2-reload__button">' + reload_message + '</button><br><button onclick="document.getElementsByTagName(&#x27;habbo-client-reload&#x27;)[0].remove();" class="modal__close"></button></habbo-client-reload>')
+    document.getElementsByTagName("habbo-v2-client")[0].children[0].insertAdjacentHTML("afterbegin",'<habbo-client-reload><h1>' + disconnected_message + '</h1><button onclick="location.reload();" class="client-v2-reload__button">' + reload_message + '</button><br><button onclick="document.getElementsByTagName(&#x27;habbo-client-reload&#x27;)[0].remove();" class="modal__close"></button></habbo-client-reload>')
 }
 
 function RemoveInterstitials() {
