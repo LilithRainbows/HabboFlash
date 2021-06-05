@@ -23,16 +23,14 @@ function createWindow() {
         icon: __dirname + '/AppIcon.ico',
         webPreferences: {
             plugins: true,
-            partition: 'persist:' + currentpartition
+            partition: 'persist:' + currentpartition,
+            preload: path.join(__dirname, "Client", "helper.js")
         }
     })
     instances.push(win)
     createMenu()
     win.maximize()
     win.loadURL('file://' + __dirname + '/HotelSelector/index.html')
-    win.webContents.on('did-start-navigation', () => {
-        win.webContents.executeJavaScript(fs.readFileSync(path.join(__dirname, "client.js")).toString())
-    })
 }
 
 const gotTheLock = app.requestSingleInstanceLock()
@@ -52,7 +50,7 @@ if (!gotTheLock) {
         var reqhandled = false;
         if (pathname == "/Habbo.swf") {
             reqhandled = true;
-            fs.readFile(path.join(__dirname, pathname), (err, contents) => {
+            fs.readFile(path.join(__dirname, "Client", pathname), (err, contents) => {
                 if (err) {
                     res.writeHead(404);
                     res.end();
