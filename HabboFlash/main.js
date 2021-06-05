@@ -95,7 +95,6 @@ if (!gotTheLock) {
             pluginName = 'PepperFlashPlayer.plugin'
             break
         case 'linux':
-            app.commandLine.appendSwitch('no-sandbox')
             if (process.arch == "x64") {
                 pluginName = 'libpepflashplayer_64.so'
             } else {
@@ -103,6 +102,11 @@ if (!gotTheLock) {
             }
             break
     }
+
+    app.commandLine.appendSwitch('no-sandbox')
+    app.commandLine.appendSwitch('ignore-gpu-blacklist')
+    app.commandLine.appendSwitch('force_high_performance_gpu')
+
     app.commandLine.appendSwitch('ppapi-flash-path', path.join(__dirname, "PepperFlash", pluginName))
 
     app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
