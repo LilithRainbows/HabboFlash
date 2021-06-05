@@ -107,6 +107,8 @@ if (!gotTheLock) {
     app.commandLine.appendSwitch('ignore-gpu-blacklist')
     app.commandLine.appendSwitch('force_high_performance_gpu')
 
+    app.commandLine.appendSwitch('ppapi-in-process')
+    app.commandLine.appendSwitch('ppapi-flash-args', 'enable_hw_video_decode=1')
     app.commandLine.appendSwitch('ppapi-flash-path', path.join(__dirname, "PepperFlash", pluginName))
 
     app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
