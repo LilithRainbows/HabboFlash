@@ -57,8 +57,9 @@ InjectClient = setInterval(function() {
             var params = {
                 "base": flashvars["flash.client.url"],
                 "allowScriptAccess": "always",
-                "menu": "false",
-                "wmode": "opaque"
+                "menu": "true",
+                "wmode": "opaque",
+                "quality": "low"
             }
             swfobject.embedSWF('https://images.habbo.com/Habbo.swf', 'hotel-c1-clientv2', '100%', '100%', '11.1.0', '', flashvars, params, null, null)
             window.HabboFlashClient.init(document.getElementById("hotel-c1-clientv2"))
