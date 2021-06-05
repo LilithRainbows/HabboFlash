@@ -117,6 +117,10 @@ if (!gotTheLock) {
 
     app.on('second-instance', (event, argv, workingDirectory) => createWindow())
 
+    app.on('gpu-info-update', () => {
+        console.log("Graphics Feature Status:","\n",app.getGPUFeatureStatus());
+    });
+
     app.whenReady().then(createWindow)
 
     app.on('window-all-closed', () => {
