@@ -84,9 +84,9 @@ if (!gotTheLock) {
     switch (process.platform) {
         case 'win32':
             if (process.arch == "x64") {
-                pluginName = 'pepflashplayer_64.dll'
+                pluginName = 'pepflashplayer64_32_0_0_465.dll'
             } else {
-                pluginName = 'pepflashplayer_32.dll'
+                pluginName = 'pepflashplayer32_32_0_0_465.dll'
             }
             break
         case 'darwin':
@@ -94,9 +94,9 @@ if (!gotTheLock) {
             break
         case 'linux':
             if (process.arch == "x64") {
-                pluginName = 'libpepflashplayer_64.so'
+                pluginName = 'libpepflashplayer64_32_0_0_465.so'
             } else {
-                pluginName = 'libpepflashplayer_32.so'
+                pluginName = 'libpepflashplayer32_32_0_0_465.so'
             }
             break
     }
@@ -107,7 +107,7 @@ if (!gotTheLock) {
 
     app.commandLine.appendSwitch('ppapi-flash-path', path.join(__dirname, "PepperFlash", pluginName))
     app.commandLine.appendSwitch('ppapi-flash-args', 'enable_hw_video_decode=1')
-    app.commandLine.appendSwitch('ppapi-flash-version', '32.0.0.371');
+    app.commandLine.appendSwitch('ppapi-flash-version', '32.0.0.465');
 
     app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
     app.commandLine.appendSwitch('allow-insecure-localhost', 'true');
