@@ -3,11 +3,15 @@
    <head>
       <meta charset="UTF-8">
       <title>Habbo Hotel</title>
-      <link rel='stylesheet' href='bootstrap.min.css'>
+      <script src="jquery.min.js"></script>
+      <script src="bootstrap.min.js"></script>
+      <script src='script.js'></script>
+      <link rel="stylesheet" href="bootstrap.min.css">
+      <link rel="stylesheet" href="background.min.css">
       <link rel="stylesheet" href="style.css">
    </head>
    <body>
-      <div id="myCarousel" class="carousel slide" data-interval="false">
+      <div id="myCarousel" class="carousel slide" data-interval="false" data-ride="carousel">
          <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
             <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -21,92 +25,108 @@
             <li data-target="#myCarousel" data-slide-to="9"></li>
          </ol>
          <div class="carousel-inner">
-            <div class="item flag EN active">
+            <div class="carousel-item active">
                <div class="container">
                   <div class="carousel-caption">
                      <h1>Habbo COM</h1>
+                     <img src="flag_icons_en.png"><br><br>
                      <p><a class="btn btn-lg btn-success" onclick="NavigateAndSaveFlag('https://habbo.com')" role="button">LET'S GO!</a></p>
                   </div>
                </div>
             </div>
-            <div class="item flag ES">
+            <div class="carousel-item">
                <div class="container">
                   <div class="carousel-caption">
                      <h1>Habbo ES</h1>
+                     <img src="flag_icons_es.png"><br><br>
                      <p><a class="btn btn-lg btn-success" onclick="NavigateAndSaveFlag('https://habbo.es')" role="button">CONECTAR</a></p>
+                     <br>
                   </div>
                </div>
             </div>
-            <div class="item flag PT">
+            <div class="carousel-item">
                <div class="container">
                   <div class="carousel-caption">
                      <h1>Habbo BR</h1>
+                     <img src="flag_icons_pt.png"><br><br>
                      <p><a class="btn btn-lg btn-success" onclick="NavigateAndSaveFlag('https://habbo.com.br')" role="button">VAMOS LÁ!</a></p>
+                     <br>
                   </div>
                </div>
             </div>
-            <div class="item flag IT">
+            <div class="carousel-item">
                <div class="container">
                   <div class="carousel-caption">
                      <h1>Habbo IT</h1>
+                     <img src="flag_icons_it.png"><br><br>
                      <p><a class="btn btn-lg btn-success" onclick="NavigateAndSaveFlag('https://habbo.it')" role="button">ENTRA!</a></p>
+                     <br>
                   </div>
                </div>
             </div>
-            <div class="item flag FR">
+            <div class="carousel-item">
                <div class="container">
                   <div class="carousel-caption">
                      <h1>Habbo FR</h1>
+                     <img src="flag_icons_fr.png"><br><br>
                      <p><a class="btn btn-lg btn-success" onclick="NavigateAndSaveFlag('https://habbo.fr')" role="button">C'EST PARTI!</a></p>
+                     <br>
                   </div>
                </div>
             </div>
-            <div class="item flag NL">
+            <div class="carousel-item">
                <div class="container">
                   <div class="carousel-caption">
                      <h1>Habbo NL</h1>
+                     <img src="flag_icons_nl.png"><br><br>
                      <p><a class="btn btn-lg btn-success" onclick="NavigateAndSaveFlag('https://habbo.nl')" role="button">SPEEL NU!</a></p>
+                     <br>
                   </div>
                </div>
             </div>
-            <div class="item flag FI">
+            <div class="carousel-item">
                <div class="container">
                   <div class="carousel-caption">
                      <h1>Habbo FI</h1>
+                     <img src="flag_icons_fi.png"><br><br>
                      <p><a class="btn btn-lg btn-success" onclick="NavigateAndSaveFlag('https://habbo.fi')" role="button">MENOKSI!</a></p>
+                     <br>
                   </div>
                </div>
             </div>
-            <div class="item flag DE">
+            <div class="carousel-item">
                <div class="container">
                   <div class="carousel-caption">
                      <h1>Habbo DE</h1>
+                     <img src="flag_icons_de.png"><br><br>
                      <p><a class="btn btn-lg btn-success" onclick="NavigateAndSaveFlag('https://habbo.de')" role="button">LOS!</a></p>
+                     <br>
                   </div>
                </div>
             </div>
-            <div class="item flag TR">
+            <div class="carousel-item">
                <div class="container">
                   <div class="carousel-caption">
                      <h1>Habbo TR</h1>
+                     <img src="flag_icons_tr.png"><br><br>
                      <p><a class="btn btn-lg btn-success" onclick="NavigateAndSaveFlag('https://habbo.com.tr')" role="button">HAYDİ BAŞLAYALIM!</a></p>
+                     <br>
                   </div>
                </div>
             </div>
-            <div class="item flag DEV">
+            <div class="carousel-item">
                <div class="container">
                   <div class="carousel-caption">
                      <h1>Habbo DEV</h1>
+                     <img src="flag_icons_dev.png"><br><br>
                      <p><a class="btn btn-lg btn-success" onclick="NavigateAndSaveFlag('https://sandbox.habbo.com/')" role="button">LET'S GO!</a></p>
+                     <br>
                   </div>
                </div>
             </div>
          </div>
-         <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-         <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+         <a class="carousel-control-prev" href="#myCarousel" data-slide="prev"><span class="carousel-control-prev-icon"></span></a>
+         <a class="carousel-control-next" href="#myCarousel" data-slide="next"><span class="carousel-control-next-icon"></span></a>
       </div>
-      <script src='jquery.min.js'></script>
-      <script src='bootstrap.min.js'></script>
-      <script src='script.js'></script>
    </body>
 </html>

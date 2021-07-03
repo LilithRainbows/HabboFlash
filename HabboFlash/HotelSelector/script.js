@@ -32,7 +32,7 @@ $(document).ready(function() {
 });
 
 function NavigateAndSaveFlag(URL) {
-    var flag_index = $('div.item.flag.active').index();
+    var flag_index = $('div.carousel-item.active').index();
     localStorage.setItem('LastFlag', flag_index);
     document.location = URL;
 }

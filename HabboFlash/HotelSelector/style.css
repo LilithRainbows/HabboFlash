@@ -1,75 +1,34 @@
 html,
 body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
 }
 
 .carousel,
-.item,
+.carousel-item,
 .active {
-  height: 100%;
+	height: 100%;
+}
+
+.carousel .carousel-indicators li {
+	width: 20px;
+	height: 20px;
 }
 
 .carousel-inner {
-  height: 100%;
+	height: 100%;
 }
 
 .carousel {
-  margin-bottom: 60px;
+	margin-bottom: 60px;
 }
 
 .carousel-caption {
-  z-index: 10;
-}
-
-.carousel .item {
-  background-color: #15507c;
-}
-
-.carousel .carousel-inner .flag {
-  background-repeat: no-repeat;
-  background-size: auto;
-  background-position: center center;
-}
-
-.carousel .carousel-inner .EN {
-  background-image: url("flag_icons_en.png");
-}
-
-.carousel .carousel-inner .ES {
-  background-image: url("flag_icons_es.png");
-}
-
-.carousel .carousel-inner .PT {
-  background-image: url("flag_icons_pt.png");
-}
-
-.carousel .carousel-inner .IT {
-  background-image: url("flag_icons_it.png");
-}
-
-.carousel .carousel-inner .FR {
-  background-image: url("flag_icons_fr.png");
-}
-
-.carousel .carousel-inner .NL {
-  background-image: url("flag_icons_nl.png");
-}
-
-.carousel .carousel-inner .FI {
-  background-image: url("flag_icons_fi.png");
-}
-
-.carousel .carousel-inner .DE {
-  background-image: url("flag_icons_de.png");
-}
-
-.carousel .carousel-inner .TR {
-  background-image: url("flag_icons_tr.png");
-}
-
-.carousel .carousel-inner .DEV {
-  background-image: url("flag_icons_dev.png");
+	z-index: 10;
+	top: 50%;
+	transform: translateY(-50%);
+	bottom: initial;
 }

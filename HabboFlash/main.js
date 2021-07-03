@@ -12,16 +12,21 @@ const instances = []
 const url = require("url");
 var currentpartition = 0;
 
-function createWindow() {
-    var currentinstancescount = instances.length
-    if (currentinstancescount > 0) {
-        currentpartition +=1
+function createWindow(link) {
+    if (typeof link == "undefined") {
+        link = 'file://' + __dirname + '/HotelSelector/index.html'
+        var currentinstancescount = instances.length
+        if (currentinstancescount > 0) {
+            currentpartition += 1
+        }
     }
     const win = new BrowserWindow({
         width: 800,
         height: 600,
         icon: __dirname + '/AppIcon.ico',
         webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: false,
             plugins: true,
             partition: 'persist:' + currentpartition,
             preload: path.join(__dirname, "Client", "helper.js")
@@ -30,7 +35,36 @@ function createWindow() {
     instances.push(win)
     createMenu()
     win.maximize()
-    win.loadURL('file://' + __dirname + '/HotelSelector/index.html')
+    var UserAgent = win.webContents.getUserAgent()
+    UserAgent = UserAgent.replace("Electron/" + process.versions.electron, "")
+    UserAgent = UserAgent.replace(app.getName() + "/" + app.getVersion(), "")
+    UserAgent = UserAgent.replaceAll("  ", " ")
+    win.webContents.setUserAgent(UserAgent)
+    win.loadURL(link)
+    win.webContents.on('new-window', (event, url, frameName, disposition, options, additionalFeatures, referrer, postBody) => {
+        var new_window_handled = false
+        if (url.includes("/profile/")) { //User profile opened from client
+            new_window_handled = true
+            event.preventDefault();
+            var ProfileLink = url.substring(url.lastIndexOf("/profile/"))
+            BrowserWindow.getFocusedWindow().webContents.executeJavaScript('FlashExternalInterface.openPage("' + ProfileLink + '")')
+        }
+        if (disposition == "new-window") { //New handled window opened (for example auth dialogs)
+            new_window_handled = true
+        }
+        if (new_window_handled == false) { //Open new tabs/unhandled windows with default app handler
+            event.preventDefault()
+            createWindow(url)
+        }
+    })
+
+    win.webContents.on('enter-html-full-screen', function() {
+        BrowserWindow.getFocusedWindow().setMenuBarVisibility(false)
+    })
+    win.webContents.on('leave-html-full-screen', function() {
+        BrowserWindow.getFocusedWindow().setMenuBarVisibility(true)
+    })
+
 }
 
 const gotTheLock = app.requestSingleInstanceLock()
@@ -78,7 +112,7 @@ if (!gotTheLock) {
                 res.end();
             });
         }
-    }).listen(617);
+    }).listen(1617);
 
     let pluginName
     switch (process.platform) {
@@ -101,6 +135,14 @@ if (!gotTheLock) {
             break
     }
 
+    /* Deprecated, instead set dpiAware parameter to false on executable manifest.
+    if(process.platform == "win32") {
+        //Force scale factor to 1 on Windows.
+        app.commandLine.appendSwitch('high-dpi-support', '1');
+        app.commandLine.appendSwitch('force-device-scale-factor', '1');
+    }
+    */
+
     app.commandLine.appendSwitch('no-sandbox')
     app.commandLine.appendSwitch('ignore-gpu-blacklist')
     app.commandLine.appendSwitch('force_high_performance_gpu')
@@ -111,12 +153,12 @@ if (!gotTheLock) {
 
     app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
     app.commandLine.appendSwitch('allow-insecure-localhost', 'true');
-    app.commandLine.appendSwitch('host-rules', 'MAP images.habbo.com localhost:617, MAP *.doubleclick.net null')
+    app.commandLine.appendSwitch('host-rules', 'MAP images.habbo.com localhost:1617, MAP *.doubleclick.net null')
 
     app.on('second-instance', (event, argv, workingDirectory) => createWindow())
 
     app.on('gpu-info-update', () => {
-        console.log("Graphics Feature Status:","\n",app.getGPUFeatureStatus());
+        console.log("Graphics Feature Status:", "\n", app.getGPUFeatureStatus());
     });
 
     app.whenReady().then(createWindow)
@@ -150,6 +192,8 @@ if (!gotTheLock) {
         var SendLinkEventHelpText = ["Enter an event command:", "Ingresa un comando de evento:"]
         var UseRoomIDText = ["Use RoomID", "Usar RoomID"]
         var UseRoomIDHelpText = ["Enter a room ID:", "Ingresa un ID de sala:"]
+        var OpenProfileText = ["Open profile", "Abrir perfil"]
+        var OpenProfileHelpText = ["Enter a username:", "Ingresa un nombre:"]
         var OpenCalendarText = ["Open calendar", "Abrir calendario"]
         var HelpMenuText = ["Help", "Ayuda"]
         var GithubText = ["Go to GitHub", "Ir a GitHub"]
@@ -180,9 +224,9 @@ if (!gotTheLock) {
                     {
                         label: ClearDataText[LanguageIndex],
                         click() {
-                            session.defaultSession.clearStorageData()
-                            app.relaunch()
-                            app.exit()
+                            var currentPartition = BrowserWindow.getFocusedWindow().webContents.browserWindowOptions.webPreferences.partition
+                            session.fromPartition(currentPartition).clearCache()
+                            session.fromPartition(currentPartition).clearStorageData()
                         }
                     },
                     {
@@ -203,17 +247,15 @@ if (!gotTheLock) {
                 submenu: [{
                         label: ZoomInText[LanguageIndex],
                         role: "zoomIn",
-                        accelerator: ''
+                        accelerator: 'CommandOrControl+='
                     },
                     {
                         label: ZoomOutText[LanguageIndex],
-                        role: "zoomOut",
-                        accelerator: ''
+                        role: "zoomOut"
                     },
                     {
                         label: ZoomRestoreText[LanguageIndex],
-                        role: "resetZoom",
-                        accelerator: ''
+                        role: "resetZoom"
                     }
                 ]
             },
@@ -235,6 +277,16 @@ if (!gotTheLock) {
                             prompt("RoomID", UseRoomIDHelpText[LanguageIndex]).then(text => {
                                 if (text) {
                                     BrowserWindow.getFocusedWindow().webContents.executeJavaScript('window.HabboFlashClient.flashInterface.openlink("navigator/goto/' + text + '")')
+                                }
+                            })
+                        }
+                    },
+                    {
+                        label: OpenProfileText[LanguageIndex],
+                        click() {
+                            prompt("OpenProfile", OpenProfileHelpText[LanguageIndex]).then(text => {
+                                if (text) {
+                                    BrowserWindow.getFocusedWindow().webContents.executeJavaScript('window.HabboFlashClient.flashInterface.openlink("friendbar/user/' + text + '")')
                                 }
                             })
                         }

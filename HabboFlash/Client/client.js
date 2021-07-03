@@ -57,7 +57,7 @@ InjectClient = setInterval(function() {
             var params = {
                 "base": flashvars["flash.client.url"],
                 "allowScriptAccess": "always",
-                "menu": "true",
+                "menu": "false",
                 "wmode": "opaque",
                 "quality": "low"
             }
@@ -130,6 +130,7 @@ function GetClientResolvingMessage() {
 }
 
 ShowDisconnectedScreen = function() {
+    if(document.getElementsByTagName("habbo-client-reload").length == 0) {
     try {
         var disconnected_message = "Disconnected!"
         var reload_message = "Reload"
@@ -143,6 +144,7 @@ ShowDisconnectedScreen = function() {
     } catch {
         console.log("Error at ShowDisconnectedScreen")
     }
+}
 }
 
 ShowExternalVariablesErrorScreen = function() {
