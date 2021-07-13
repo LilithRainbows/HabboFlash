@@ -12,7 +12,7 @@ HelperTimer = setInterval(function() {
         HabboNativeButton.remove()
     }
 
-    var RoomEnterButton = document.getElementsByClassName("room__enter-button")[0]
+    var RoomEnterButton = document.querySelectorAll('.room__enter-button:not(.modded)')[0]
     if (RoomEnterButton) {
         RoomEnterButton.className += " modded"
         if (RoomEnterButton.href.includes("/hotel?")) {
@@ -25,8 +25,8 @@ HelperTimer = setInterval(function() {
         }
     }
 
-    var HabboNewsRooms = Array.from(document.getElementsByClassName("news-header__link news-header__banner"))
-    HabboNewsRooms = Array.prototype.concat(HabboNewsRooms, Array.from(document.getElementsByClassName("news-header__link news-header__wrapper")))
+    var HabboNewsRooms = Array.from(document.querySelectorAll('.news-header__link.news-header__banner:not(.modded)'))
+    HabboNewsRooms = Array.prototype.concat(HabboNewsRooms, Array.from(document.querySelectorAll('.news-header__link.news-header__wrapper:not(.modded)')))
     HabboNewsRooms = Array.prototype.slice.call(HabboNewsRooms)
     for (var i = 0, l = HabboNewsRooms.length; i < l; i++) {
         var HabboNewsRoom = HabboNewsRooms[i]
