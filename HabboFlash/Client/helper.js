@@ -14,9 +14,26 @@ HelperTimer = setInterval(function() {
 
     var RoomEnterButton = document.getElementsByClassName("room__enter-button")[0]
     if (RoomEnterButton) {
+        RoomEnterButton.className += " modded"
         if (RoomEnterButton.href.includes("/hotel?")) {
             RoomEnterButton.href = RoomEnterButton.href.replace("hotel?", "hotelv2?")
             RoomEnterButton.addEventListener("click", function() {
+                var RoomID = this.href.substring(this.href.lastIndexOf("?room=") + 6)
+                console.log("Requested room link: " + RoomID)
+                OpenRoomLink(RoomID)
+            });
+        }
+    }
+
+    var HabboNewsRooms = Array.from(document.getElementsByClassName("news-header__link news-header__banner"))
+    HabboNewsRooms = Array.prototype.concat(HabboNewsRooms, Array.from(document.getElementsByClassName("news-header__link news-header__wrapper")))
+    HabboNewsRooms = Array.prototype.slice.call(HabboNewsRooms)
+    for (var i = 0, l = HabboNewsRooms.length; i < l; i++) {
+        var HabboNewsRoom = HabboNewsRooms[i]
+        HabboNewsRoom.className += " modded"
+        if (HabboNewsRoom.href.includes("/hotel?")) {
+            HabboNewsRoom.href = HabboNewsRoom.href.replace("hotel?", "hotelv2?")
+            HabboNewsRoom.addEventListener("click", function() {
                 var RoomID = this.href.substring(this.href.lastIndexOf("?room=") + 6)
                 console.log("Requested room link: " + RoomID)
                 OpenRoomLink(RoomID)
