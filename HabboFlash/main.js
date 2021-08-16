@@ -118,9 +118,9 @@ if (!gotTheLock) {
     switch (process.platform) {
         case 'win32':
             if (process.arch == "x64") {
-                pluginName = 'pepflashplayer64_32_0_0_465.dll'
+                pluginName = 'libpepflashplayer_x64.dll'
             } else {
-                pluginName = 'pepflashplayer32_32_0_0_465.dll'
+                pluginName = 'libpepflashplayer_x86.dll'
             }
             break
         case 'darwin':
@@ -128,9 +128,13 @@ if (!gotTheLock) {
             break
         case 'linux':
             if (process.arch == "x64") {
-                pluginName = 'libpepflashplayer64_32_0_0_465.so'
+                pluginName = 'libpepflashplayer_x64.so'
             } else {
-                pluginName = 'libpepflashplayer32_32_0_0_465.so'
+                if (process.arch.startsWith("arm")) {
+                    pluginName = 'libpepflashplayer_armhf.so'
+                } else {
+                    pluginName = 'libpepflashplayer_x86.so'
+                }
             }
             break
     }
