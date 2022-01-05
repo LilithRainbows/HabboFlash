@@ -3,9 +3,9 @@ var SSOToken = null
 var ProductVersion = null
 
 InjectClient = setInterval(function() {
-    var HotelClientV2 = document.getElementById("hotel-c1-clientv2")
-    if (HotelClientV2) {
-        if (HotelClientV2.getAttribute("type") == "application/x-shockwave-flash") {
+    var HotelClient = document.getElementById("hotel-c1-client")
+    if (HotelClient) {
+        if (HotelClient.getAttribute("type") == "application/x-shockwave-flash") {
             ClientInjected = true
         } else {
             ClientInjected = false
@@ -13,9 +13,9 @@ InjectClient = setInterval(function() {
         if (ClientInjected == false) {
             if (SSOToken == null) {
                 try {
-                    var clientsrc = HotelClientV2.getAttribute("src")
+                    var clientsrc = HotelClient.getAttribute("src")
                     SSOToken = clientsrc.substring(clientsrc.lastIndexOf("/") + 1)
-                    HotelClientV2.outerHTML = '<div id="hotel-c1-clientv2"></div>'
+                    HotelClient.outerHTML = '<div id="hotel-c1-client"></div>'
                     InjectSwfObjectJS()
                     InjectHabboAPIJS()
                 } catch {
@@ -61,8 +61,9 @@ InjectClient = setInterval(function() {
                 "wmode": "opaque",
                 "quality": "low"
             }
-            swfobject.embedSWF('https://images.habbo.com/Habbo.swf', 'hotel-c1-clientv2', '100%', '100%', '11.1.0', '', flashvars, params, null, null)
-            window.HabboFlashClient.init(document.getElementById("hotel-c1-clientv2"))
+            swfobject.embedSWF('https://images.habbo.com/Habbo.swf', 'hotel-c1-client', '100%', '100%', '11.1.0', '', flashvars, params, null, null)
+            window.HabboFlashClient.init(document.getElementById("hotel-c1-client"))
+            ForceFlashClientTopMost()
             RemoveInterstitials()
         }
     }
@@ -130,21 +131,21 @@ function GetClientResolvingMessage() {
 }
 
 ShowDisconnectedScreen = function() {
-    if(document.getElementsByTagName("habbo-client-reload").length == 0) {
-    try {
-        var disconnected_message = "Disconnected!"
-        var reload_message = "Reload"
-        var HotelHost = window.location.host
-        HotelHost = HotelHost.substring(HotelHost.lastIndexOf(".") + 1)
-        if (HotelHost == "es") {
-            disconnected_message = "¡Desconectado!"
-            reload_message = "Recargar"
+    if (document.getElementsByTagName("habbo-client-reload").length == 0) {
+        try {
+            var disconnected_message = "Disconnected!"
+            var reload_message = "Reload"
+            var HotelHost = window.location.host
+            HotelHost = HotelHost.substring(HotelHost.lastIndexOf(".") + 1)
+            if (HotelHost == "es") {
+                disconnected_message = "¡Desconectado!"
+                reload_message = "Recargar"
+            }
+            document.getElementsByTagName("habbo-client")[0].children[0].insertAdjacentHTML("afterbegin", '<habbo-client-reload><h1>' + disconnected_message + '</h1><button onclick="location.reload();" class="client-reload__button">' + reload_message + '</button><br><button onclick="document.getElementsByTagName(&#x27;habbo-client-reload&#x27;)[0].remove();" class="modal__close"></button></habbo-client-reload>')
+        } catch {
+            console.log("Error at ShowDisconnectedScreen")
         }
-        document.getElementsByTagName("habbo-v2-client")[0].children[0].insertAdjacentHTML("afterbegin", '<habbo-client-reload><h1>' + disconnected_message + '</h1><button onclick="location.reload();" class="client-v2-reload__button">' + reload_message + '</button><br><button onclick="document.getElementsByTagName(&#x27;habbo-client-reload&#x27;)[0].remove();" class="modal__close"></button></habbo-client-reload>')
-    } catch {
-        console.log("Error at ShowDisconnectedScreen")
     }
-}
 }
 
 ShowExternalVariablesErrorScreen = function() {
@@ -157,7 +158,7 @@ ShowExternalVariablesErrorScreen = function() {
             error_message = "¡Error de external variables!"
             reload_message = "Recargar"
         }
-        document.getElementsByTagName("habbo-v2-client")[0].insertAdjacentHTML("afterend", '<habbo-client-reload><h1>' + error_message + '</h1><button onclick="location.reload();" class="client-v2-reload__button">' + reload_message + '</button></habbo-client-reload>')
+        document.getElementsByTagName("habbo-client")[0].insertAdjacentHTML("afterend", '<habbo-client-reload><h1>' + error_message + '</h1><button onclick="location.reload();" class="client-reload__button">' + reload_message + '</button></habbo-client-reload>')
     } catch {
         console.log("Error at ShowExternalVariablesErrorScreen")
     }
@@ -186,4 +187,12 @@ function InjectHabboAPIJS() {
             clearInterval(InjectTimer)
         }
     }, 100);
+}
+
+function ForceFlashClientTopMost() {
+    try {
+        document.querySelectorAll('[habbo-require-session]')[0].setAttribute("style", 'z-index: 666;');
+    } catch {
+        console.log("Error at ForceFlashClientTopMost")
+    }
 }

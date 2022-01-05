@@ -14,15 +14,17 @@ HelperTimer = setInterval(function() {
 
     var RoomEnterButton = document.querySelectorAll('.room__enter-button:not(.modded)')[0]
     if (RoomEnterButton) {
-        RoomEnterButton.className += " modded"
-        if (RoomEnterButton.href.includes("/hotel?")) {
-            RoomEnterButton.href = RoomEnterButton.href.replace("hotel?", "hotelv2?")
-            RoomEnterButton.addEventListener("click", function() {
-                var RoomID = this.href.substring(this.href.lastIndexOf("?room=") + 6)
-                console.log("Requested room link: " + RoomID)
-                OpenRoomLink(RoomID)
-            });
+        if (RoomEnterButton.hasAttribute("ng-click")) {
+            RoomEnterButton.removeAttribute("ng-click")
+            //RommEnterButton.setAttribute("href", "/hotel")
         }
+        RoomEnterButton.addEventListener("click", function() {
+            document.getElementsByClassName('hotel-button-beta')[0].click()
+            var RoomID = getLastURLSegment();
+            console.log("Requested room link: " + RoomID)
+            OpenRoomLink(RoomID)
+        });
+        RoomEnterButton.className += " modded"
     }
 
     var HabboNewsRooms = Array.from(document.querySelectorAll('.news-header__link.news-header__banner:not(.modded)'))
@@ -32,7 +34,6 @@ HelperTimer = setInterval(function() {
         var HabboNewsRoom = HabboNewsRooms[i]
         HabboNewsRoom.className += " modded"
         if (HabboNewsRoom.href.includes("/hotel?")) {
-            HabboNewsRoom.href = HabboNewsRoom.href.replace("hotel?", "hotelv2?")
             HabboNewsRoom.addEventListener("click", function() {
                 var RoomID = this.href.substring(this.href.lastIndexOf("?room=") + 6)
                 console.log("Requested room link: " + RoomID)
@@ -46,7 +47,6 @@ HelperTimer = setInterval(function() {
         var HabboGroup = HabboGroups[i]
         HabboGroup.removeAttribute("habbo-flash-href")
         if (HabboGroup.href.includes("/hotel?")) {
-            HabboGroup.href = HabboGroup.href.replace("hotel?", "hotelv2?")
             HabboGroup.addEventListener("click", function() {
                 var RoomID = this.href.substring(this.href.lastIndexOf("?room=") + 6)
                 console.log("Requested room link: " + RoomID)
@@ -70,4 +70,10 @@ function OpenRoomLink(RoomID) {
     } catch {
         console.log("Room link error: " + RoomID)
     }
+}
+
+function getLastURLSegment() {
+    const segments = new URL(document.location).pathname.split('/');
+    const last = segments.pop() || segments.pop();
+    return last;
 }
