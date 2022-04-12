@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=HabboFlashForLinux
+Exec=bash -c "~/.local/share/applications/HabboFlashForLinux/HabboFlash"
+Icon=HabboFlashForLinux.png
+StartupNotify=true
+StartupWMClass=HabboFlash
+Categories=Game;
