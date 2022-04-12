@@ -25,8 +25,8 @@ mv -v $HabboFlashForLinuxAppPath/$ZIP/* $HabboFlashForLinuxAppPath
 rm -r $HabboFlashForLinuxAppPath/$ZIP
 chmod +x $HabboFlashForLinuxAppPath/HabboFlash
 
-wget https://github.com/LilithRainbows/HabboFlashForLinux/raw/main/HabboFlashForLinux.png -O ~/.icons/HabboFlashForLinux.png
-wget https://github.com/LilithRainbows/HabboFlashForLinux/raw/main/HabboFlashForLinux.desktop -O $HabboFlashForLinuxAppPath/../HabboFlashForLinux.desktop
+wget https://github.com/LilithRainbows/HabboFlash/raw/main/HabboFlashForLinux.png -O ~/.icons/HabboFlashForLinux.png
+wget https://github.com/LilithRainbows/HabboFlash/raw/main/HabboFlashForLinux.desktop -O $HabboFlashForLinuxAppPath/../HabboFlashForLinux.desktop
 
 rm $HabboFlashForLinuxAppPath/$ZIP.zip
 
