@@ -42,7 +42,7 @@ wget https://github.com/LilithRainbows/HabboFlash/raw/main/HabboFlashForLinux.pn
 wget https://github.com/LilithRainbows/HabboFlash/raw/main/HabboFlashForLinux.desktop -O $HabboFlashForLinuxAppPath/../HabboFlashForLinux.desktop
 rm $HabboFlashForLinuxAppPath/$ZIP.zip
 
-echo "Client installation finished. A shortcut for HabboLinux will appear on your Chromebook."
+echo "Client installation finished. A shortcut for HabboFlashForLinux will appear on your system."
 
 # Optional: remove this installation script.
 rm $0
