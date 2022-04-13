@@ -10,7 +10,7 @@ elif [ $ARCH = 'amd64' ]; then
 elif [ $ARCH = 'arm32' ] || [ $ARCH = 'armhf' ]; then
 	ZIP='HabboFlash_Release3_Linux_ARM32HF';
 elif [ $ARCH = 'arm64' ]; then
-	ZIP='HabboFlash_Release3_Linux_ARM64HF';
+	ZIP='HabboFlash_Release3_Linux_ARM32HF';
 fi
 
 echo "[Checking dependencies]"
