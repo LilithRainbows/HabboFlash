@@ -13,25 +13,35 @@ elif [ $ARCH = 'arm64' ]; then
 	ZIP='HabboFlash_Release3_Linux_ARM64HF';
 fi
 
-sudo apt -y update
-sudo apt install -y libnss3-dev
+echo "[Checking dependencies]"
+pkgs='unzip wget libnss3'
+for pkg in $pkgs; do
+    if type dpkg &>/dev/null; then
+        if [ -z "$(dpkg --list | grep "$pkg")" ]; then
+            sudo apt install $pkg -y
+        fi
+    else
+        if [ -z "$(pacman -Q | grep "$pkg")" ]; then
+            sudo pacman -S $pkg --noconfirm
+        fi
+    fi
+done
 
 HabboFlashForLinuxAppPath=~/.local/share/applications/HabboFlashForLinux
-mkdir $HabboFlashForLinuxAppPath
-
+#rm -r $HabboFlashForLinuxAppPath
+mkdir -p $HabboFlashForLinuxAppPath
+mkdir -p ~/.icons
+echo "[Downloading client]"
 wget https://github.com/LilithRainbows/HabboFlash/releases/download/release3_cu1/$ZIP.zip -O $HabboFlashForLinuxAppPath/$ZIP.zip
-
+echo "[Extracting client]"
 unzip -o $HabboFlashForLinuxAppPath/$ZIP.zip -d $HabboFlashForLinuxAppPath
 mv -v $HabboFlashForLinuxAppPath/$ZIP/* $HabboFlashForLinuxAppPath
 rm -r $HabboFlashForLinuxAppPath/$ZIP
 chmod +x $HabboFlashForLinuxAppPath/HabboFlash
-
 wget https://github.com/LilithRainbows/HabboFlash/raw/main/HabboFlashForLinux.png -O ~/.icons/HabboFlashForLinux.png
 wget https://github.com/LilithRainbows/HabboFlash/raw/main/HabboFlashForLinux.desktop -O $HabboFlashForLinuxAppPath/../HabboFlashForLinux.desktop
-
 rm $HabboFlashForLinuxAppPath/$ZIP.zip
 
-# Installation script finished.
 echo "Client installation finished. A shortcut for HabboLinux will appear on your Chromebook."
 
 # Optional: remove this installation script.
