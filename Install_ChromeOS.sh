@@ -17,6 +17,7 @@ sudo apt -y update
 sudo apt install -y libnss3-dev
 
 HabboFlashForLinuxAppPath=~/.local/share/applications/HabboFlashForLinux
+mkdir $HabboFlashForLinuxAppPath
 
 wget https://github.com/LilithRainbows/HabboFlash/releases/download/release3_cu1/$ZIP.zip -O $HabboFlashForLinuxAppPath/$ZIP.zip
 
