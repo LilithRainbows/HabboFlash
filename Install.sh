@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cd "$(cd "$(dirname "$0")" && pwd)" #Set current path to script path
-
 ARCH=`dpkg --print-architecture`
 if [ $ARCH = 'i386' ]; then
 	ZIP='HabboFlash_Release3_Linux_x86';
@@ -10,8 +8,14 @@ elif [ $ARCH = 'amd64' ]; then
 elif [ $ARCH = 'arm32' ] || [ $ARCH = 'armhf' ]; then
 	ZIP='HabboFlash_Release3_Linux_ARM32HF';
 elif [ $ARCH = 'arm64' ]; then
-	ZIP='HabboFlash_Release3_Linux_ARM64HF';
+	ZIP='HabboFlash_Release3_Linux_ARM32HF';
+	echo "[Adding ARMHF architecture]"
+	sudo dpkg --add-architecture armhf
+	sudo apt update && sudo apt install libc6:armhf libstdc++6:armhf
+	cd /lib && sudo ln -vs arm-linux-gnueabihf/ld-2.23.so ld-linux.so.3
 fi
+
+cd "$(cd "$(dirname "$0")" && pwd)" #Set current path to script path
 
 echo "[Checking dependencies]"
 pkgs='unzip wget libnss3'
