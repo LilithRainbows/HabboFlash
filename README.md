@@ -1,7 +1,6 @@
 <b>Latest release download</b>:<br>
 https://github.com/LilithRainbows/HabboFlash/releases/latest
 <br><br>
-<b>NOTE FOR ARM64 USERS: FLASH PLUGIN IS ARMHF BASED</b><br><br>
 <b>Easy Linux usage instructions:</b><br>
 -Open Terminal and type this command:<br>
 wget https://github.com/LilithRainbows/HabboFlash/raw/main/Install.sh -O Install.sh && bash Install.sh
