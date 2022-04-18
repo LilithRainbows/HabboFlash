@@ -8,10 +8,10 @@ elif [ $ARCH = 'amd64' ]; then
 elif [ $ARCH = 'arm32' ] || [ $ARCH = 'armhf' ]; then
 	ZIP='HabboFlash_Release3_Linux_ARM32HF';
 elif [ $ARCH = 'arm64' ]; then
-	//echo "[Adding ARMHF architecture]"
-	//sudo dpkg --add-architecture armhf
-	//sudo apt update && sudo apt install libc6:armhf libstdc++6:armhf
-	//cd /lib && sudo ln -vs arm-linux-gnueabihf/ld-2.23.so ld-linux.so.3
+	#echo "[Adding ARMHF architecture]"
+	#sudo dpkg --add-architecture armhf
+	#sudo apt update && sudo apt install libc6:armhf libstdc++6:armhf
+	#cd /lib && sudo ln -vs arm-linux-gnueabihf/ld-2.23.so ld-linux.so.3
 	ZIP='HabboFlash_Release3_Linux_ARM64HF';
 fi
 
