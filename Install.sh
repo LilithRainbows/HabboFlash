@@ -38,7 +38,7 @@ HabboFlashForLinuxAppPath=~/.local/share/applications/HabboFlashForLinux
 mkdir -p $HabboFlashForLinuxAppPath
 mkdir -p ~/.icons
 echo "[Downloading client]"
-wget https://github.com/LilithRainbows/HabboFlash/releases/download/release3_cu1/$ZIP.zip -O $HabboFlashForLinuxAppPath/$ZIP.zip
+wget https://github.com/LilithRainbows/HabboFlash/releases/download/releas3_u2/$ZIP.zip -O $HabboFlashForLinuxAppPath/$ZIP.zip
 echo "[Extracting client]"
 unzip -o $HabboFlashForLinuxAppPath/$ZIP.zip -d $HabboFlashForLinuxAppPath
 mv -v $HabboFlashForLinuxAppPath/$ZIP/* $HabboFlashForLinuxAppPath
