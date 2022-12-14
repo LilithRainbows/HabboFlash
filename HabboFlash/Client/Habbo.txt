@@ -1,1 +1,12 @@
-PRODUCTION-202102051428-449960633 spoofed as WIN63-202211211324-128637707
+Client version: PRODUCTION-202102051428-449960633 spoofed as WIN63-202211211324-128637707
+JPEXS version: 15.0.0
+
+Enabled commands:
+:playing (toggle click-through mode)
+:fps Number (change current fps)
+
+Enabled features:
+-Some custom fixes to make it work
+-Disabled clipboard paste lock
+-Visit, roomid, chooser, furni and bcfloor commands are now available for all users
+-Changed MAX_SIMULTANEOUS_DOWNLOADS values
